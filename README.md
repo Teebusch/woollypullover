@@ -1,2 +1,3 @@
-# woolly-pullover
- A fuzzy comforting Hugo theme
+# Woolly Pullover
+
+A fuzzy comforting Hugo theme

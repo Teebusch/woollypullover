@@ -1,0 +1,100 @@
+{{ define "main" }}
+
+<section id="section-welcome">
+    <div id="welcome-wrapper">
+        <h1 id="welcome-text">
+            <p>{{ .Site.Params.introTitle | markdownify }}</p>
+            <p>{{ .Site.Params.introSubtitle | markdownify }}</p>
+        </h1>
+        <img id="welcome-img" src="avatar.svg">
+    </div>
+    <nav>
+        <ul>
+           <li><a href="#section-projects">Projects.</a></li>
+           <li><a href="#fake-blog">Blog.</a></li>
+           <li><a href="#section-contact">Contact.</a></li>
+        </ul>
+    </nav>
+</section>
+
+<section id="section-projects" name="projects">
+    <div id="projects-wrapper">
+        <ul id="project-gallery">
+            {{ range first .Site.Params.maxFeaturedProjects (where .Site.RegularPages.ByPublishDate.Reverse "Section" "projects") }}
+            <li class="project-tile">
+                <span class="project-title"></span>
+                <img class="blog-thumbnail" src= {{ index .Params "featured_image" | default "project-default.png" }}>
+                <div class="project-description">
+                    <p class="project-title">{{ .Title }}</p>
+                    <p class="project-teaser">{{ .Params.teaser }}</p>
+                </div>
+            </li>
+            {{ end }}
+            {{ $posts := (where .Site.RegularPages "Section" "==" "projects") }}
+            {{ if gt (len $posts) .Site.Params.maxFeaturedProjects }}
+                <li id="project-more">
+                    <a href="#">See all my projects...</a>
+                </li>
+            {{end}}
+        </ul>
+        <div id="fake-blog"></div>
+    </div>
+</section>
+
+<section id="section-blog", name="blog">
+    <div id="blog-wrapper">
+        <div id="blog-header">
+            <h1>Blog</h1>
+            {{ $posts = (where .Site.RegularPages "Section" "==" "blog") }}
+            {{ if gt (len $posts) .Site.Params.maxFeaturedBlogs }}
+            <a id="blog-more" href="#">See all my blog posts...</a>    
+            {{end}}
+        </div>
+        <ul id="blog-list"> 
+            {{ range first .Site.Params.maxFeaturedBlogs (where .Site.RegularPages.ByPublishDate.Reverse "Section" "blog") }} 
+            <li> 
+                <a href="{{ .Permalink }}">
+                    <div class="blog-post">
+                        <img class="blog-thumbnail" src= {{ index .Params "featured_image" | default "blog-default.png" }}>
+                        <div class="blog-text">
+                            <h2 class="blog-title">{{ .Title }}</h2>
+                            <p class="blog-teaser">{{ .Summary }}</p>
+                        </div>
+                    </div>
+                </a>
+            </li> 
+            {{ end }}
+        </ul>
+    </div>
+</section>
+
+<section id="section-contact", name="contact">
+    <h1>Wanna do something together?</h1>
+
+    {{with .Site.Params.email}}
+    <div id="contactemail">
+        <a href="mailto:{{.}}"><img src="/fontawesome/email.svg" alt="Email">{{.}}</a>
+    </div>
+    {{end}}
+
+    <ul id="socialmediabuttons">
+        {{with .Site.Params.github   }}<li><a href="https://github.com/{{.}}"><img src="/fontawesome/github.svg" alt="Github"></a>         </li>{{end}}
+        {{with .Site.Params.twitter  }}<li><a href="https://twitter.com/{{.}}"><img src="/fontawesome/twitter.svg" alt="Twitter"></a>      </li>{{end}}
+        {{with .Site.Params.skype    }}<li><a href="https://skype.com/{{.}}"><img src="/fontawesome/skype.svg"  alt="Skype"></a>           </li>{{end}}
+        {{with .Site.Params.telegram }}<li><a href="https://telegram.com/{{.}}"><img src="/fontawesome/telegram.svg" alt="Telegram"></a>   </li>{{end}}
+        {{with .Site.Params.linkedin }}<li><a href="https://linkedin.com/{{.}}"><img src="/fontawesome/linkedin.svg" alt="LinkedIn"></a>   </li>{{end}}
+        {{with .Site.Params.facebook }}<li><a href="https://facebook.com/{{.}}"><img src="/fontawesome/facebook.svg" alt="Facebook"></a>   </li>{{end}}
+        {{with .Site.Params.instagram}}<li><a href="https://instagram.com/{{.}}"><img src="/fontawesome/instagram.svg" alt="Instagram"></a></li>{{end}}
+        {{with .Site.Params.pinterest}}<li><a href="https://pinterest.com/{{.}}"><img src="/fontawesome/pinterest.svg" alt="Pinterest"></a></li>{{end}}
+    </ul>
+
+
+</section>
+
+<section id="section-footer">
+        <a href="https://www.freepik.com/free-photos-vectors/people">People vector created by freepik - www.freepik.com</a>
+        <a href="https://www.freepik.com/free-photos-vectors/coffee">Coffee vector created by bluelela - www.freepik.com</a>
+        <a href="http://www.heropatterns.com/">background pattern from heropatterns.com</a>
+</section>
+
+{{ end }}
